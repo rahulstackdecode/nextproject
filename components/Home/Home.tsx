@@ -10,7 +10,6 @@ import Solutions from './Solutions/Solutions';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '@/lib/firebase';
 
-
 const Home = () => {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
@@ -27,7 +26,6 @@ const Home = () => {
               })
                 .then((token) => {
                   console.log('📬 FCM Token:', token);
-                  // 🔁 Optional: Send token to your backend here
                 })
                 .catch((err) => {
                   console.warn('🔴 Error getting FCM token:', err);
@@ -41,7 +39,15 @@ const Home = () => {
     if (messaging !== null) {
       onMessage(messaging, (payload) => {
         console.log('🔔 Foreground Notification:', payload);
-        alert(`${payload.notification?.title}\n${payload.notification?.body}`);
+
+        const { title, body, icon } = payload.notification || {};
+
+        if (Notification.permission === 'granted') {
+          new Notification(title || 'Notification', {
+            body: body || '',
+            icon: icon || '/icon-512x512.png', // fallback icon
+          });
+        }
       });
     }
   }, []);
