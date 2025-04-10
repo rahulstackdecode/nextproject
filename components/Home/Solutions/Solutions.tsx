@@ -37,14 +37,6 @@ const Solutions = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {SolutionsList.map((solution, index) => (
                         <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition p-4">
-                            {/* <div className="w-full relative mb-4" >
-                                <Image
-                                    src={solution.img}
-                                    alt=""
-                                    fill 
-                                    className="object-cover"
-                                />
-                            </div> */}
                             <h2 className='font-semibold text-black text-2xl mb-2'>{solution.title}</h2>
                             <p className='text-[#393939] mb-3'>{solution.des}</p>
                             <a className='text-base text-[#000] cursor-pointer'>{solution.linktext}</a>
