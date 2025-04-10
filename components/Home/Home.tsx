@@ -8,7 +8,6 @@ import Cta from './Cta/CtaSection';
 import Solutions from './Solutions/Solutions';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '@/lib/firebase';
-import { toast } from 'react-toastify';
 
 const Home = () => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -47,8 +46,14 @@ const Home = () => {
     if (messaging !== null) {
       onMessage(messaging, (payload) => {
         console.log('🔔 Foreground Notification:', payload);
-        const { title, body } = payload.notification || {};
-        toast.info(<div><strong>{title}</strong><p>{body}</p></div>);
+        const { title, body, icon } = payload.notification || {};
+
+        if (Notification.permission === 'granted') {
+          new Notification(title || 'Notification', {
+            body: body || '',
+            icon: icon || '/images/icon-192.png',
+          });
+        }
       });
     }
   }, [hasMounted]);
