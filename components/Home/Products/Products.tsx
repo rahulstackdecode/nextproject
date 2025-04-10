@@ -1,4 +1,4 @@
-"use client"; // Only if using Next.js 13+ app directory
+"use client";
 
 import { useEffect, useState } from "react";
 
