@@ -16,8 +16,19 @@ messaging.onBackgroundMessage(function (payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/images/icon-192.png',
+    icon: payload.notification.icon || '/images/icon-192.png',
+    data: {
+      click_action: payload.notification.click_action || '/',
+    },
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener('notificationclick', function (event) {
+  const click_action = event.notification.data.click_action;
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow(click_action)
+  );
 });
