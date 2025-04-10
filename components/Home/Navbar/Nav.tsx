@@ -25,9 +25,8 @@ const Nav = ({ openNav }: Props) => {
 
   return (
     <header
-      className={` fixed top-0 left-0 w-full z-[100] h-[12vh] transition-all duration-200  ${
-        navBg ? 'bg-white shadow-md' : ''
-      }`}
+      className={` fixed top-0 left-0 w-full z-[100] h-[12vh] transition-all duration-200  ${navBg ? 'bg-white shadow-md' : ''
+        }`}
     >
       <div className="max-w-7xl mx-auto flex items-center h-full justify-between w-[90%] xl:w-[80%]">
         {/* Logo */}

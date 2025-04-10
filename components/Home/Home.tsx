@@ -1,17 +1,25 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Hero from './Hero/Hero';
 import WhyChoose from './WhyChoose/WhyChoose';
 import BlogSec from './Blogs/BlogSec';
 import Rating from './Rating/Rating';
 import Cta from './Cta/CtaSection';
 import Solutions from './Solutions/Solutions';
-// import ProductsPage from './Products/Products';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '@/lib/firebase';
+import { toast } from 'react-toastify';
 
 const Home = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+
   useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasMounted || typeof window === 'undefined') return;
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/firebase-messaging-sw.js')
@@ -39,24 +47,16 @@ const Home = () => {
     if (messaging !== null) {
       onMessage(messaging, (payload) => {
         console.log('🔔 Foreground Notification:', payload);
-
-        const { title, body, icon } = payload.notification || {};
-
-        if (Notification.permission === 'granted') {
-          new Notification(title || 'Notification', {
-            body: body || '',
-            icon: icon || '/images/icon-512.png',
-          });
-        }
+        const { title, body } = payload.notification || {};
+        toast.info(<div><strong>{title}</strong><p>{body}</p></div>);
       });
     }
-  }, []);
+  }, [hasMounted]);
 
   return (
-    <div className='overflow-hidden'>
+    <div className="overflow-hidden">
       <Hero />
       <Solutions />
-      {/* <ProductsPage /> */}
       <WhyChoose />
       <Cta />
       <Rating />

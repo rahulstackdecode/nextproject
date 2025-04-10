@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ToastProvider from "@/components/ToastProvider"; 
+
+
 import ResponsiveNav from "@/components/Home/Navbar/ResponsiveNav";
 import Footer from "@/components/Home/Footer/Footer";
 
@@ -26,15 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-       <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#317EFB" />
-        <link rel="apple-touch-icon" href="/images/icon-192.png" />
+      <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#317EFB" />
+      <link rel="apple-touch-icon" href="/images/icon-192.png" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ResponsiveNav></ResponsiveNav>
 
         {children}
+        <ToastProvider />
+
         <Footer></Footer>
       </body>
     </html>
