@@ -45,7 +45,7 @@ const Home = () => {
         if (Notification.permission === 'granted') {
           new Notification(title || 'Notification', {
             body: body || '',
-            icon: icon || '/icon-512x512.png', // fallback icon
+            icon: icon || '/images/icon-512.png',
           });
         }
       });
