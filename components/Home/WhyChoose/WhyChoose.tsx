@@ -26,7 +26,7 @@ export default function WhyChoose() {
 
     return (
         <section className="pt-12 pb-20 bg-white">
-            <div className="max-w-6xl mx-auto px-4 text-center">
+            <div className="max-w-7xl mx-auto px-4 text-center">
                 <h2 className="text-4xl font-bold text-gray-800 mb-6">Why Choose Us</h2>
                 <p className="text-gray-500 mb-12 text-sm md:text-base">
                     Our platform is designed to give you the best social experience with speed, security, and simplicity.

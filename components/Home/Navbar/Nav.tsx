@@ -25,11 +25,11 @@ const Nav = ({ openNav }: Props) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-[100] h-[12vh] transition-all duration-200  ${
+      className={` fixed top-0 left-0 w-full z-[100] h-[12vh] transition-all duration-200  ${
         navBg ? 'bg-white shadow-md' : ''
       }`}
     >
-      <div className="flex items-center h-full justify-between w-[90%] xl:w-[80%] mx-auto">
+      <div className="max-w-7xl mx-auto flex items-center h-full justify-between w-[90%] xl:w-[80%] mx-auto">
         {/* Logo */}
         <h1 className="text-xl md:text-3xl font-bold">
           <span className="text-3xl md:text-4xl text-black">Test</span>

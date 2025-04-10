@@ -3,7 +3,7 @@ import React from 'react';
 const Hero = () => {
     return (
         <div className='w-full pt-[4vh] md-pt-[18vh] h-screen bg-[#fff]'>
-            <div className='flex justify-center flex-col w-[90%] sm:w-[80%] h-full mx-auto'>
+            <div className='max-w-7xl flex  justify-center flex-col w-[90%] sm:w-[80%] h-full mx-auto'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 items-center gap-12'>
                     <div>
                         <div className='w-fit py-1.5 px-2 md:px-5 rounded-full shadow-md flex items-center space-x-3 bg-white'>
