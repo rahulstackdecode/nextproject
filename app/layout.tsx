@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ToastProvider from "@/components/ToastProvider"; 
 
 
 import ResponsiveNav from "@/components/Home/Navbar/ResponsiveNav";
@@ -38,7 +37,7 @@ export default function RootLayout({
         <ResponsiveNav></ResponsiveNav>
 
         {children}
-        <ToastProvider />
+      
 
         <Footer></Footer>
       </body>

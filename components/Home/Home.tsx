@@ -9,6 +9,8 @@ import Solutions from './Solutions/Solutions';
 import { getToken, onMessage } from 'firebase/messaging';
 import { messaging } from '@/lib/firebase';
 
+const vapidKey = 'BHfnYwv9JrorR4GInmec2S_0FgOppg88B1gvJM4zDOLEpJqATufFHG3RaZ7-tlcwAdbg_CTXf2P9RSoTiH1fa-Y';
+
 const Home = () => {
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -28,7 +30,7 @@ const Home = () => {
           Notification.requestPermission().then((permission) => {
             if (permission === 'granted' && messaging) {
               getToken(messaging, {
-                vapidKey: 'BHfnYwv9JrorR4GInmec2S_0FgOppg88B1gvJM4zDOLEpJqATufFHG3RaZ7-tlcwAdbg_CTXf2P9RSoTiH1fa-Y',
+                vapidKey,
                 serviceWorkerRegistration: registration,
               })
                 .then((token) => {
@@ -43,7 +45,7 @@ const Home = () => {
         .catch((err) => console.error('❌ Service Worker registration failed:', err));
     }
 
-    if (messaging !== null) {
+    if (messaging) {
       onMessage(messaging, (payload) => {
         console.log('🔔 Foreground Notification:', payload);
         const { title, body, icon } = payload.notification || {};
