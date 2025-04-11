@@ -35,10 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ResponsiveNav></ResponsiveNav>
-
         {children}
-      
-
         <Footer></Footer>
       </body>
     </html>
