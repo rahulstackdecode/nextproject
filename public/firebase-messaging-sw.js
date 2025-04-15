@@ -11,6 +11,7 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+// Handle background messages
 messaging.onBackgroundMessage(function (payload) {
   console.log('[firebase-messaging-sw.js] Received background message', payload);
   const notificationTitle = payload.notification.title;
@@ -25,10 +26,21 @@ messaging.onBackgroundMessage(function (payload) {
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
+// Handle custom notifications from the app in foreground
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SHOW_NOTIFICATION') {
+    const { title, body, icon, click_action } = event.data.payload;
+    self.registration.showNotification(title || 'Notification', {
+      body: body || '',
+      icon: icon || '/images/icon-192.png',
+      data: { click_action: click_action || '/' },
+    });
+  }
+});
+
+// Handle notification click
 self.addEventListener('notificationclick', function (event) {
   const click_action = event.notification.data.click_action;
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow(click_action)
-  );
+  event.waitUntil(clients.openWindow(click_action));
 });

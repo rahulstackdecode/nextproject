@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import Hero from './Hero/Hero';
 import WhyChoose from './WhyChoose/WhyChoose';
@@ -6,7 +7,7 @@ import BlogSec from './Blogs/BlogSec';
 import Rating from './Rating/Rating';
 import Cta from './Cta/CtaSection';
 import Solutions from './Solutions/Solutions';
-import { getToken, onMessage } from 'firebase/messaging';
+import { getToken, onMessage, MessagePayload } from 'firebase/messaging';
 import { messaging } from '@/lib/firebase';
 
 const vapidKey = 'BHfnYwv9JrorR4GInmec2S_0FgOppg88B1gvJM4zDOLEpJqATufFHG3RaZ7-tlcwAdbg_CTXf2P9RSoTiH1fa-Y';
@@ -46,14 +47,21 @@ const Home = () => {
     }
 
     if (messaging) {
-      onMessage(messaging, (payload) => {
+      onMessage(messaging, (payload: MessagePayload) => {
         console.log('🔔 Foreground Notification:', payload);
-        const { title, body, icon } = payload.notification || {};
 
-        if (Notification.permission === 'granted') {
-          new Notification(title || 'Notification', {
-            body: body || '',
-            icon: icon || '/images/icon-192.png',
+        const { title, body, icon } = payload.notification || {};
+        const click_action = payload.data?.click_action || '/';
+
+        if (Notification.permission === 'granted' && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({
+            type: 'SHOW_NOTIFICATION',
+            payload: {
+              title,
+              body,
+              icon,
+              click_action,
+            },
           });
         }
       });
