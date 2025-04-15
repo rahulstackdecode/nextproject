@@ -53,16 +53,31 @@ const Home = () => {
         const { title, body, icon } = payload.notification || {};
         const click_action = payload.data?.click_action || '/';
 
-        if (Notification.permission === 'granted' && navigator.serviceWorker.controller) {
-          navigator.serviceWorker.controller.postMessage({
-            type: 'SHOW_NOTIFICATION',
-            payload: {
-              title,
-              body,
-              icon,
-              click_action,
-            },
-          });
+        const notificationOptions: NotificationOptions = {
+          body: body || '',
+          icon: icon || '/images/icon-192.png',
+          data: {
+            click_action,
+          },
+        };
+
+        // Try using service worker to show notification
+        if (Notification.permission === 'granted') {
+          if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({
+              type: 'SHOW_NOTIFICATION',
+              payload: {
+                title,
+                ...notificationOptions,
+              },
+            });
+          } else {
+            // Fallback: Show system notification directly
+            const notification = new Notification(title || 'Notification', notificationOptions);
+            notification.onclick = () => {
+              window.open(click_action, '_blank');
+            };
+          }
         }
       });
     }
